@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" fill="none">
+  <defs>
+    <!-- Globe Gradients -->
+    <radialGradient id="globeGrad" cx="45%" cy="40%" r="55%" fx="35%" fy="30%">
+      <stop offset="0%" stop-color="#00C4FF" />
+      <stop offset="35%" stop-color="#0066FF" />
+      <stop offset="75%" stop-color="#002D8C" />
+      <stop offset="100%" stop-color="#00144D" />
+    </radialGradient>
+    <linearGradient id="globeAtmosphere" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00E5FF" stop-opacity="0.8" />
+      <stop offset="50%" stop-color="#0066FF" stop-opacity="0.3" />
+      <stop offset="100%" stop-color="#001850" stop-opacity="0" />
+    </linearGradient>
+
+    <!-- Orbital Swoosh Gradient -->
+    <linearGradient id="swooshGrad" x1="0%" y1="50%" x2="100%" y2="50%" gradientTransform="rotate(-20)">
+      <stop offset="0%" stop-color="#0052FF" />
+      <stop offset="25%" stop-color="#0099FF" />
+      <stop offset="55%" stop-color="#00D2B4" />
+      <stop offset="85%" stop-color="#00E676" />
+      <stop offset="100%" stop-color="#14CC48" />
+    </linearGradient>
+    
+    <!-- Card Gradient -->
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0077FF" />
+      <stop offset="100%" stop-color="#00B4D8" />
+    </linearGradient>
+
+    <!-- Text Gradient for "Pay" -->
+    <linearGradient id="payGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#005BFF" />
+      <stop offset="45%" stop-color="#00B8D4" />
+      <stop offset="80%" stop-color="#00E676" />
+      <stop offset="100%" stop-color="#00D46A" />
+    </linearGradient>
+    
+    <filter id="cardGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#0077FF" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <!-- Globe Sphere -->
+  <circle cx="240" cy="200" r="125" fill="url(#globeGrad)" />
+  <circle cx="240" cy="200" r="125" fill="url(#globeAtmosphere)" />
+
+  <!-- Continental Landmasses (Stylized Vector) -->
+  <g fill="#00D0FF" opacity="0.85">
+    <!-- North America -->
+    <path d="M190 120 C205 110, 225 115, 230 130 C235 140, 220 155, 210 160 C195 165, 180 150, 185 135 Z" />
+    <!-- Eurasia / Africa -->
+    <path d="M245 105 C270 95, 305 110, 320 135 C310 160, 290 180, 280 200 C270 220, 285 240, 275 260 C265 245, 255 220, 250 200 C240 180, 245 150, 240 130 Z" />
+    <!-- South America -->
+    <path d="M215 190 C228 195, 235 220, 230 245 C220 265, 210 275, 205 255 C200 235, 205 210, 215 190 Z" />
+    <!-- Australia -->
+    <path d="M315 240 C328 235, 340 245, 335 258 C325 265, 312 258, 315 240 Z" />
+  </g>
+
+  <!-- Orbital Ring Behind (drawn first for 3D depth) -->
+  <path d="M140 215 C150 160, 270 120, 370 145" stroke="url(#swooshGrad)" stroke-width="14" stroke-linecap="round" fill="none" opacity="0.4" />
+
+  <!-- Orbital Ring In Front (sweeping forward) -->
+  <path d="M370 145 C410 160, 380 220, 320 255 C230 305, 115 270, 95 240 C80 215, 100 185, 140 215" stroke="url(#swooshGrad)" stroke-width="20" stroke-linecap="round" fill="none" />
+  <path d="M370 145 C410 160, 380 220, 320 255 C230 305, 115 270, 95 240 C80 215, 100 185, 140 215" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.75" />
+
+  <!-- Orbiting Contactless Payment Card -->
+  <g transform="translate(350, 110) rotate(22)" filter="url(#cardGlow)">
+    <!-- Card Body -->
+    <rect x="0" y="0" width="85" height="54" rx="8" fill="url(#cardGrad)" stroke="#FFFFFF" stroke-width="2.5" />
+    <!-- Chip -->
+    <rect x="14" y="16" width="16" height="13" rx="2.5" fill="#FFFFFF" opacity="0.9" />
+    <line x1="14" y1="22.5" x2="30" y2="22.5" stroke="#0077FF" stroke-width="1.5" />
+    <line x1="22" y1="16" x2="22" y2="29" stroke="#0077FF" stroke-width="1.5" />
+    <!-- Contactless Waves -->
+    <path d="M60 20 A10 10 0 0 1 60 34" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" fill="none" />
+    <path d="M66 16 A16 16 0 0 1 66 38" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" fill="none" />
+    <path d="M72 12 A22 22 0 0 1 72 42" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" fill="none" />
+  </g>
+
+  <!-- Typography: GlobalPay -->
+  <text x="50" y="405" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="78" font-weight="900" fill="#00215E" letter-spacing="-1">Global<tspan fill="url(#payGrad)">Pay</tspan></text>
+
+  <!-- Subtitle Tagline -->
+  <text x="55" y="445" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="16" font-weight="700" fill="#002B7A" letter-spacing="4.5">
+    PAY ANYWHERE  <tspan fill="#00D2B4">•</tspan>  ANYTIME  <tspan fill="#00D2B4">•</tspan>  GLOBALLY
+  </text>
+</svg>

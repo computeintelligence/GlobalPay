@@ -1,0 +1,6 @@
+{
+  "name": "GlobalPay",
+  "description": "Official public website for GlobalPay, the multi-currency and crypto global payments app. Pay anywhere, anytime, globally.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
