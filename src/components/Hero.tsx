@@ -14,7 +14,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenGetApp, onScrollToRates }) => 
   return (
     <section id="hero" className="relative pt-28 pb-16 md:pt-36 md:pb-24 overflow-hidden">
       {/* Background Decorative Gradients matching the Logo Colors */}
-      <div className="absolute top-10 left-1/2 -translate-x-1/2 w-full max-w-6xl h-96 bg-gradient-to-tr from-[#0052FF]/15 via-[#00D2B4]/15 to-[#10DF62]/10 blur-3xl pointer-events-none -z-10 rounded-full" />
+      <div className="absolute top-10 left-1/2 -translate-x-1/2 w-full max-w-6xl h-96 bg-gradient-to-tr from-[#0052FF]/15 via-[#00D2B4]/15 to-[#10DF62]/10 blur-3xl pointer-events-none -z-10 rounde[...]
       <div className="absolute top-1/4 right-0 w-80 h-80 bg-cyan-500/10 dark:bg-cyan-500/15 blur-3xl pointer-events-none -z-10 rounded-full" />
       <div className="absolute top-1/3 left-0 w-80 h-80 bg-blue-600/10 dark:bg-blue-600/15 blur-3xl pointer-events-none -z-10 rounded-full" />
 
@@ -27,7 +27,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenGetApp, onScrollToRates }) => 
             {/* Pill Badge */}
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 shadow-xs">
               <span className="flex h-2 w-2 rounded-full bg-[#10DF62] animate-pulse" />
-              <span className="text-[10px] sm:text-xs font-bold tracking-wider uppercase bg-gradient-to-r from-[#0052FF] via-[#00B4D8] to-[#10DF62] bg-clip-text text-transparent whitespace-nowrap">
+              <span className="text-[7.5px] sm:text-[9px] font-bold tracking-wider uppercase bg-gradient-to-r from-[#0052FF] via-[#00B4D8] to-[#10DF62] bg-clip-text text-transparent whitespace-nowrap"[...]
                 Pay Anywhere • Anytime • Globally
               </span>
             </div>
@@ -42,7 +42,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenGetApp, onScrollToRates }) => 
 
             {/* Subtitle */}
             <p className="text-lg md:text-xl text-slate-600 dark:text-slate-300 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-normal">
-              The next-generation global payment app that unites multi-currency banking and crypto exchange into one intuitive mobile experience. Real mid-market rates, instant cross-border routing, and zero hidden fees.
+              The next-generation global payment app that unites multi-currency banking and crypto exchange into one intuitive mobile experience. Real mid-market rates, instant cross-border routin[...]
             </p>
 
             {/* App Exclusivity Notice Pill */}
@@ -51,7 +51,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenGetApp, onScrollToRates }) => 
                 <Smartphone className="w-5 h-5" />
               </div>
               <p className="text-xs text-slate-700 dark:text-slate-300">
-                <strong className="text-slate-900 dark:text-white font-semibold">Native Mobile Security:</strong> Money and crypto transfers are made via the official <span className="font-semibold text-[#0052FF] dark:text-cyan-400">GlobalPay App</span> on iOS and Android for biometric authorization.
+                <strong className="text-slate-900 dark:text-white font-semibold">Native Mobile Security:</strong> Money and crypto transfers are made via the official <span className="font-semibol[...]
               </p>
             </div>
 
@@ -60,7 +60,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenGetApp, onScrollToRates }) => 
               <button
                 id="hero-get-started-btn"
                 onClick={onOpenGetApp}
-                className="w-full sm:w-auto px-7 py-4 rounded-2xl font-extrabold text-base text-white bg-gradient-to-r from-[#0052FF] via-[#00B4D8] to-[#10DF62] hover:opacity-95 shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-3 cursor-pointer"
+                className="w-full sm:w-auto px-7 py-4 rounded-2xl font-extrabold text-base text-white bg-gradient-to-r from-[#0052FF] via-[#00B4D8] to-[#10DF62] hover:opacity-95 shadow-lg shadow-c[...]
               >
                 <span>Get Started</span>
                 <ArrowRight className="w-4 h-4" />
@@ -69,7 +69,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenGetApp, onScrollToRates }) => 
               <button
                 id="hero-see-rates-btn"
                 onClick={onScrollToRates}
-                className="w-full sm:w-auto px-6 py-4 rounded-2xl font-bold text-base text-slate-800 dark:text-slate-200 bg-slate-100 dark:bg-slate-800/80 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 transition-all flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full sm:w-auto px-6 py-4 rounded-2xl font-bold text-base text-slate-800 dark:text-slate-200 bg-slate-100 dark:bg-slate-800/80 hover:bg-slate-200 dark:hover:bg-slate-70[...]
               >
                 <RefreshCw className="w-4 h-4 text-[#0052FF] dark:text-cyan-400" />
                 <span>Compare Live Rates</span>
@@ -115,7 +115,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenGetApp, onScrollToRates }) => 
             <div className="relative w-full max-w-[340px] sm:max-w-[360px]">
               
               {/* Outer Phone Glow / Aura */}
-              <div className="absolute -inset-1.5 bg-gradient-to-r from-[#0052FF] via-[#00D2B4] to-[#10DF62] rounded-[48px] opacity-75 blur-xl group-hover:opacity-100 transition duration-1000 -z-10" />
+              <div className="absolute -inset-1.5 bg-gradient-to-r from-[#0052FF] via-[#00D2B4] to-[#10DF62] rounded-[48px] opacity-75 blur-xl group-hover:opacity-100 transition duration-1000 -z-[...]
 
               {/* Phone Hardware Chassis */}
               <div className="relative bg-slate-950 p-3 rounded-[44px] shadow-2xl border-4 border-slate-800/90">
@@ -323,7 +323,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenGetApp, onScrollToRates }) => 
                   <div className="mt-4 pt-3 border-t border-slate-800">
                     <button
                       onClick={onOpenGetApp}
-                      className="w-full py-2.5 rounded-xl font-bold text-xs text-white bg-gradient-to-r from-[#0052FF] via-[#00D2B4] to-[#10DF62] text-center flex items-center justify-center gap-2 hover:opacity-95 transition-opacity"
+                      className="w-full py-2.5 rounded-xl font-bold text-xs text-white bg-gradient-to-r from-[#0052FF] via-[#00D2B4] to-[#10DF62] text-center flex items-center justify-center gap-[...]
                     >
                       <Smartphone className="w-3.5 h-3.5" />
                       <span>Download App to Send Now</span>
