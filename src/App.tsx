@@ -12,13 +12,15 @@ import { Footer } from './components/Footer';
 
 // Pages
 import { HomePage } from './pages/HomePage';
-import { FeaturesPage } from './pages/FeaturesPage';
-import { RatesPage } from './pages/RatesPage';
-import { NetworkPage } from './pages/NetworkPage';
+import { PersonalPage } from './pages/PersonalPage';
+import { BusinessPage } from './pages/BusinessPage';
+import { HowItWorksPage } from './pages/HowItWorksPage';
 import { PricingPage } from './pages/PricingPage';
 import { SecurityPage } from './pages/SecurityPage';
 import { FAQPage } from './pages/FAQPage';
 import { GetStartedPage } from './pages/GetStartedPage';
+import { PersonalSignupPage, BusinessSignupPage, PersonalSigninPage, BusinessSigninPage } from './pages/SignupPages';
+import { LegalPage } from './pages/LegalPage';
 
 const AppContent: React.FC = () => {
   const { currentPage } = useNavigation();
@@ -32,12 +34,12 @@ const AppContent: React.FC = () => {
     switch (currentPage) {
       case 'home':
         return <HomePage />;
-      case 'features':
-        return <FeaturesPage />;
-      case 'rates':
-        return <RatesPage />;
-      case 'network':
-        return <NetworkPage />;
+      case 'personal':
+        return <PersonalPage />;
+      case 'business':
+        return <BusinessPage />;
+      case 'how-it-works':
+        return <HowItWorksPage />;
       case 'pricing':
         return <PricingPage />;
       case 'security':
@@ -46,6 +48,22 @@ const AppContent: React.FC = () => {
         return <FAQPage />;
       case 'get-started':
         return <GetStartedPage />;
+      case 'personal-signup':
+        return <PersonalSignupPage />;
+      case 'business-signup':
+        return <BusinessSignupPage />;
+      case 'personal-signin':
+        return <PersonalSigninPage />;
+      case 'business-signin':
+        return <BusinessSigninPage />;
+      case 'contact':
+        return <LegalPage title="Contact" />;
+      case 'terms':
+        return <LegalPage title="Terms of Service" />;
+      case 'privacy':
+        return <LegalPage title="Privacy Policy" />;
+      case 'aml-kyc':
+        return <LegalPage title="AML/KYC Policy" />;
       default:
         return <HomePage />;
     }

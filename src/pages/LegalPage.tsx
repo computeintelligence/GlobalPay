@@ -1,0 +1,3 @@
+import React from 'react';
+
+export const LegalPage: React.FC<{ title: string }> = ({ title }) => <div className="pt-28 pb-20 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8"><h1 className="text-4xl font-black text-slate-900 dark:text-white">{title}</h1><div className="mt-8 space-y-6 text-sm leading-relaxed text-slate-600 dark:text-slate-300"><p>This page is a placeholder for GlobalPay's {title.toLowerCase()}.</p><p>[LEGAL REVIEW NEEDED] Add the approved content for this page before launch.</p>{title === 'AML/KYC Policy' && <p>GlobalPay requires identity verification for Personal accounts and business verification for Business accounts before payments can be made or received.</p>}</div></div>;

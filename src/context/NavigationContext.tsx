@@ -10,20 +10,38 @@ const NavigationContext = createContext<NavigationContextType | undefined>(undef
 
 const VALID_PAGES: PageId[] = [
   'home',
-  'features',
-  'rates',
-  'network',
+  'personal',
+  'business',
+  'how-it-works',
   'pricing',
   'security',
   'faq',
   'get-started',
+  'personal-signup',
+  'business-signup',
+  'personal-signin',
+  'business-signin',
+  'contact',
+  'terms',
+  'privacy',
+  'aml-kyc',
 ];
+
+const REDIRECTS: Partial<Record<string, PageId>> = {
+  features: 'how-it-works',
+  rates: 'home',
+  network: 'personal',
+};
 
 export const NavigationProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [currentPage, setCurrentPage] = useState<PageId>(() => {
     const hash = window.location.hash.replace(/^#\/?/, '').trim() as PageId;
     if (VALID_PAGES.includes(hash)) {
       return hash;
+    }
+    if (REDIRECTS[hash]) {
+      window.location.hash = `#/${REDIRECTS[hash]}`;
+      return REDIRECTS[hash] as PageId;
     }
     return 'home';
   });
@@ -40,6 +58,8 @@ export const NavigationProvider: React.FC<{ children: React.ReactNode }> = ({ ch
       if (VALID_PAGES.includes(hash)) {
         setCurrentPage(hash);
         window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (REDIRECTS[hash]) {
+        navigateTo(REDIRECTS[hash] as PageId);
       } else if (!hash) {
         setCurrentPage('home');
       }

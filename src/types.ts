@@ -1,12 +1,20 @@
 export type PageId =
   | 'home'
-  | 'features'
-  | 'rates'
-  | 'network'
+  | 'personal'
+  | 'business'
+  | 'how-it-works'
   | 'pricing'
   | 'security'
   | 'faq'
-  | 'get-started';
+  | 'get-started'
+  | 'personal-signup'
+  | 'business-signup'
+  | 'personal-signin'
+  | 'business-signin'
+  | 'contact'
+  | 'terms'
+  | 'privacy'
+  | 'aml-kyc';
 
 export type CurrencyType = 'fiat' | 'crypto';
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Sun, Moon, ArrowRight, Menu, X, UserCheck, LogOut, ShieldCheck, CreditCard } from 'lucide-react';
+import { Sun, Moon, ArrowRight, Menu, X, LogOut } from 'lucide-react';
 import { GlobalPayLogo } from './GlobalPayLogo';
 import { useTheme } from '../context/ThemeContext';
 import { useNavigation } from '../context/NavigationContext';
@@ -12,6 +12,7 @@ export const Navbar: React.FC = () => {
   const { currentUser, signOut } = useAccount();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [signInOpen, setSignInOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,10 +24,10 @@ export const Navbar: React.FC = () => {
 
   const navLinks: { name: string; page: PageId }[] = [
     { name: 'Home', page: 'home' },
-    { name: 'Features', page: 'features' },
-    { name: 'Live Rates', page: 'rates' },
-    { name: 'Global Network', page: 'network' },
-    { name: 'Pricing & Plans', page: 'pricing' },
+    { name: 'Personal', page: 'personal' },
+    { name: 'Business', page: 'business' },
+    { name: 'How It Works', page: 'how-it-works' },
+    { name: 'Pricing', page: 'pricing' },
     { name: 'Security', page: 'security' },
     { name: 'FAQ', page: 'faq' },
   ];
@@ -101,7 +102,7 @@ export const Navbar: React.FC = () => {
             <div className="flex items-center gap-2">
               <button
                 id="navbar-user-dashboard-btn"
-                onClick={() => handleNav('get-started')}
+                onClick={() => setSignInOpen(!signInOpen)}
                 className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-700 transition-all cursor-pointer"
               >
                 <div className="w-6 h-6 rounded-full bg-gradient-to-r from-[#0052FF] to-[#00D2B4] flex items-center justify-center text-[10px] text-white font-black">
@@ -134,6 +135,7 @@ export const Navbar: React.FC = () => {
               >
                 Sign In
               </button>
+              {signInOpen && <div className="absolute top-14 right-28 z-10 w-44 rounded-xl bg-white dark:bg-[#07132B] border border-slate-200 dark:border-slate-700 shadow-lg p-2"><button onClick={() => handleNav('personal-signin')} className="w-full text-left px-3 py-2 rounded-lg text-sm font-semibold hover:bg-slate-100 dark:hover:bg-slate-800">Personal</button><button onClick={() => handleNav('business-signin')} className="w-full text-left px-3 py-2 rounded-lg text-sm font-semibold hover:bg-slate-100 dark:hover:bg-slate-800">Business</button></div>}
 
               {/* Universal Get Started CTA */}
               <button
@@ -187,6 +189,10 @@ export const Navbar: React.FC = () => {
           </div>
 
           <div className="pt-3 border-t border-slate-200 dark:border-slate-800 flex flex-col gap-2">
+            <div className="grid grid-cols-2 gap-2">
+              <button onClick={() => handleNav('personal-signin')} className="py-2.5 rounded-xl font-bold text-sm text-slate-700 dark:text-slate-200 bg-slate-100 dark:bg-slate-800">Sign In: Personal</button>
+              <button onClick={() => handleNav('business-signin')} className="py-2.5 rounded-xl font-bold text-sm text-slate-700 dark:text-slate-200 bg-slate-100 dark:bg-slate-800">Sign In: Business</button>
+            </div>
             <button
               id="mobile-drawer-get-started-btn"
               onClick={() => handleNav('get-started')}
