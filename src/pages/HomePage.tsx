@@ -1,28 +1,170 @@
-import React, { useState } from 'react';
-import { ArrowRight, Check, RefreshCw } from 'lucide-react';
-import { useNavigation } from '../context/NavigationContext';
+import React from "react";
+import { ArrowRight, Check, ShieldCheck } from "lucide-react";
+import { useNavigation } from "../context/NavigationContext";
+import { FeeCalculator } from "../components/FeeCalculator";
+import { NetworkIllustration } from "../components/NetworkIllustration";
+import { LiveTickerStrip } from "../components/LiveTickerStrip";
 
-const currencies = ['USD', 'EUR', 'GBP', 'AUD', 'CAD', 'BTC', 'ETH'];
-
-export const TransferEstimator: React.FC = () => {
-  const [amount, setAmount] = useState('250');
-  const [from, setFrom] = useState('USD');
-  const [to, setTo] = useState('EUR');
-  const estimated = (Number(amount) || 0) * 0.92;
-  return <div className="bg-white dark:bg-[#07132B] rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-xl">
-    <div className="flex items-center justify-between mb-5"><h2 className="text-xl font-black text-slate-900 dark:text-white">Estimate your transfer</h2><span className="text-xs font-bold text-emerald-600 dark:text-emerald-400">Fee: less than 3%</span></div>
-    <label className="block text-xs font-bold text-slate-500 mb-2">You send</label>
-    <div className="flex gap-2 mb-4"><input value={amount} onChange={(event) => setAmount(event.target.value)} type="number" min="0" className="min-w-0 flex-1 px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 font-bold text-slate-900 dark:text-white" /><select value={from} onChange={(event) => setFrom(event.target.value)} className="px-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 font-bold text-slate-900 dark:text-white">{currencies.map((currency) => <option key={currency}>{currency}</option>)}</select></div>
-    <div className="flex items-center gap-3 my-3 text-xs text-slate-500"><span className="h-px flex-1 bg-slate-200 dark:bg-slate-700" /><RefreshCw className="w-4 h-4" /><span className="h-px flex-1 bg-slate-200 dark:bg-slate-700" /></div>
-    <label className="block text-xs font-bold text-slate-500 mb-2">Recipient receives (estimate)</label>
-    <div className="flex gap-2"><div className="min-w-0 flex-1 px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 font-bold text-slate-900 dark:text-white">{estimated.toFixed(2)}</div><select value={to} onChange={(event) => setTo(event.target.value)} className="px-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 font-bold text-slate-900 dark:text-white">{currencies.map((currency) => <option key={currency}>{currency}</option>)}</select></div>
-    <p className="mt-4 text-xs leading-relaxed text-slate-500">Estimate only. Final amount is confirmed before you pay.</p>
-  </div>;
-};
-
-const ProductCard: React.FC<{ title: string; text: string; items: string[]; onClick: () => void }> = ({ title, text, items, onClick }) => <div className="p-7 rounded-3xl bg-white dark:bg-[#07132B] border border-slate-200 dark:border-slate-800 shadow-lg flex flex-col"><h2 className="text-2xl font-black text-slate-900 dark:text-white">{title}</h2><p className="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300">{text}</p><ul className="mt-5 space-y-3 text-sm text-slate-700 dark:text-slate-200 flex-1">{items.map((item) => <li key={item} className="flex gap-2"><Check className="w-4 h-4 mt-0.5 text-emerald-500 shrink-0" />{item}</li>)}</ul><button onClick={onClick} className="mt-7 inline-flex items-center gap-2 text-sm font-bold text-[#0052FF] dark:text-cyan-400">Learn more <ArrowRight className="w-4 h-4" /></button></div>;
+const buttonClass =
+  "inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#2F6FF0] to-[#14B8A6] px-5 py-3 text-sm font-bold text-white shadow-[0_10px_24px_rgba(47,111,240,0.22)] transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_12px_28px_rgba(20,184,166,0.28)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2F6FF0] focus-visible:ring-offset-2";
+const personalFeatures = [
+  "Send and receive local payments",
+  "Send money abroad in many currencies",
+  "Buy, sell, swap, send and receive crypto",
+  "See a clear estimated fee before you pay",
+  "Verified accounts only",
+];
+const businessFeatures = [
+  "Accept customer payments on your website, app or online store",
+  "Payment links and invoices",
+  "Clear fees per sale",
+  "Verified businesses only",
+];
+const questions = [
+  [
+    "What does it cost?",
+    "The GlobalPay fee is shown as a percentage with a small minimum and a maximum, plus partner fees.",
+  ],
+  [
+    "Do I need to verify my identity?",
+    "Everyone completes identity verification. Businesses also complete business verification.",
+  ],
+  [
+    "Can I use one account for both?",
+    "No. Personal and Business are separate accounts.",
+  ],
+];
+const FeatureGrid: React.FC<{ items: string[] }> = ({ items }) => (
+  <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+    {items.map((item) => (
+      <div
+        key={item}
+        className="rounded-2xl border border-slate-200 bg-white p-5 text-sm font-bold text-slate-700 dark:border-slate-800 dark:bg-[#07132B] dark:text-slate-200"
+      >
+        <Check className="mb-3 h-5 w-5 text-emerald-500" />
+        {item}
+      </div>
+    ))}
+  </div>
+);
 
 export const HomePage: React.FC = () => {
   const { navigateTo } = useNavigation();
-  return <div className="pt-28 pb-20"><section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-center"><div><span className="text-xs font-black uppercase tracking-widest text-[#0052FF] dark:text-cyan-400">GlobalPay</span><h1 className="mt-4 text-4xl sm:text-6xl font-black leading-tight text-slate-900 dark:text-white">Send and receive payments in many currencies.</h1><p className="mt-5 text-lg leading-relaxed text-slate-600 dark:text-slate-300">GlobalPay helps people and businesses send and receive local, international, and crypto payments through trusted payment partners.</p><div className="mt-7 flex flex-wrap gap-3"><button onClick={() => navigateTo('get-started')} className="px-6 py-3 rounded-xl font-bold text-white bg-gradient-to-r from-[#0052FF] to-[#00D2B4]">Get Started <ArrowRight className="inline w-4 h-4 ml-1" /></button><button onClick={() => navigateTo('how-it-works')} className="px-6 py-3 rounded-xl font-bold text-slate-800 dark:text-white border border-slate-300 dark:border-slate-700">How it works</button></div><div className="mt-6 flex flex-wrap gap-5 text-xs font-bold text-slate-500"><span>Verified accounts only</span><span>Less than 3% per transaction</span></div></div><TransferEstimator /></section><section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-20"><h2 className="text-3xl font-black text-slate-900 dark:text-white text-center">Choose the account that fits you</h2><div className="grid md:grid-cols-2 gap-6 mt-8"><ProductCard title="For Personal" text="For individuals who need to send and receive payments across currencies." items={['Send and receive local and international payments', 'Use multiple currencies, including crypto', 'See your payment history']} onClick={() => navigateTo('personal')} /><ProductCard title="For Business" text="For merchants who want to accept payments on a website, app, or online store." items={['Accept customer payments', 'View past transactions', 'Create payment links']} onClick={() => navigateTo('business')} /></div></section><section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mt-20"><h2 className="text-3xl font-black text-slate-900 dark:text-white text-center">How it works</h2><div className="grid md:grid-cols-3 gap-4 mt-8">{['Create your account', 'Verify your identity', 'Send or receive payments'].map((step, index) => <div key={step} className="p-5 rounded-2xl bg-slate-50 dark:bg-[#07132B] border border-slate-200 dark:border-slate-800"><span className="text-sm font-black text-[#0052FF]">0{index + 1}</span><p className="mt-3 font-bold text-slate-900 dark:text-white">{step}</p></div>)}</div></section></div>;
+  return (
+    <div className="pt-28 pb-20">
+      <section className="home-hero relative overflow-hidden">
+        <div className="hero-background" />
+        <NetworkIllustration />
+        <div className="relative z-10 mx-auto grid max-w-7xl items-center gap-12 px-4 py-12 sm:px-6 lg:grid-cols-[minmax(0,0.92fr)_minmax(420px,0.8fr)] lg:px-8 lg:py-20">
+          <div className="max-w-xl">
+            <span className="hero-enter hero-enter-1 text-xs font-bold uppercase tracking-widest text-[#2F6FF0]">
+              GlobalPay
+            </span>
+            <h1 className="hero-enter hero-enter-2 mt-4 font-semibold text-[#0B0F19]">
+              Send and receive payments in many currencies.
+            </h1>
+            <p className="hero-enter hero-enter-3 mt-5 text-lg leading-relaxed text-slate-600">
+              GlobalPay connects people and businesses to trusted payment
+              partners for local, international, and crypto payments.
+            </p>
+            <div className="hero-enter hero-enter-4 mt-7 flex flex-wrap gap-3">
+              <button
+                onClick={() => navigateTo("get-started")}
+                className={buttonClass}
+              >
+                Get Started <ArrowRight className="h-4 w-4" />
+              </button>
+              <button
+                onClick={() => navigateTo("how-it-works")}
+                className="hero-secondary-button"
+              >
+                How it works
+              </button>
+            </div>
+            <p className="hero-enter hero-enter-5 mt-6 text-xs font-semibold text-slate-500">
+              GlobalPay fee from 0.5% per transaction, plus partner fees.
+            </p>
+          </div>
+          <div className="hero-enter hero-enter-6">
+            <FeeCalculator compact />
+          </div>
+        </div>
+      </section>
+      <LiveTickerStrip />
+      <section className="mx-auto mt-24 max-w-7xl px-4 sm:px-6 lg:px-8">
+        <h2 className="text-3xl font-black text-slate-900 dark:text-white">
+          For Personal
+        </h2>
+        <p className="mt-3 text-slate-600 dark:text-slate-300">
+          Simple payment tools for everyday needs.
+        </p>
+        <FeatureGrid items={personalFeatures} />
+        <button
+          onClick={() => navigateTo("personal-signup")}
+          className={`${buttonClass} mt-8`}
+        >
+          Create a Personal account <ArrowRight className="h-4 w-4" />
+        </button>
+      </section>
+      <section className="mx-auto mt-24 max-w-7xl px-4 sm:px-6 lg:px-8">
+        <h2 className="text-3xl font-black text-slate-900 dark:text-white">
+          For Business
+        </h2>
+        <p className="mt-3 text-slate-600 dark:text-slate-300">
+          Accept customer payments and keep your records in one place.
+        </p>
+        <FeatureGrid items={businessFeatures} />
+        <button
+          onClick={() => navigateTo("business-signup")}
+          className={`${buttonClass} mt-8`}
+        >
+          Create a Business account <ArrowRight className="h-4 w-4" />
+        </button>
+      </section>
+      <section className="mx-auto mt-24 max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mb-8 max-w-2xl">
+          <h2 className="text-3xl font-black text-slate-900 dark:text-white">
+            Know your fee before you pay.
+          </h2>
+          <p className="mt-3 text-slate-600 dark:text-slate-300">
+            See the partner fee, VAT where it applies, GlobalPay fee, and total.
+            Every result is an estimate.
+          </p>
+        </div>
+        <FeeCalculator compact />
+      </section>
+      <section className="mx-auto mt-24 max-w-4xl px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center gap-3">
+          <ShieldCheck className="h-7 w-7 text-emerald-500" />
+          <h2 className="text-3xl font-black text-slate-900 dark:text-white">
+            Safety and verification
+          </h2>
+        </div>
+        <p className="mt-4 text-slate-600 dark:text-slate-300">
+          Everyone completes identity verification before using the service.
+          GlobalPay does not hold your funds. Payments are processed directly by our licensed payment partners, and every account must be verified before sending or receiving money.
+        </p>
+      </section>
+      <section className="mx-auto mt-24 max-w-4xl px-4 sm:px-6 lg:px-8">
+        <h2 className="text-3xl font-black text-slate-900 dark:text-white">
+          Common questions
+        </h2>
+        <div className="mt-8 space-y-4">
+          {questions.map(([question, answer]) => (
+            <div
+              key={question}
+              className="rounded-2xl border border-slate-200 p-5 dark:border-slate-800"
+            >
+              <h3 className="font-black text-slate-900 dark:text-white">
+                {question}
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
+                {answer}
+              </p>
+            </div>
+          ))}
+        </div>
+      </section>
+    </div>
+  );
 };

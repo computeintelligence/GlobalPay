@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ThemeProvider } from './context/ThemeContext';
 import { NavigationProvider, useNavigation } from './context/NavigationContext';
 import { AccountProvider } from './context/AccountContext';
@@ -24,14 +24,44 @@ import { LegalPage } from './pages/LegalPage';
 
 const AppContent: React.FC = () => {
   const { currentPage } = useNavigation();
+  const [displayPage, setDisplayPage] = useState(currentPage);
+  const [isExiting, setIsExiting] = useState(false);
+
+  useEffect(() => {
+    if (currentPage === displayPage) return;
+    setIsExiting(true);
+    const timer = window.setTimeout(() => {
+      setDisplayPage(currentPage);
+      setIsExiting(false);
+    }, 150);
+    return () => window.clearTimeout(timer);
+  }, [currentPage, displayPage]);
 
   // Scroll to top when page changes
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' });
   }, [currentPage]);
 
+  useEffect(() => {
+    const page = document.querySelector<HTMLElement>('.site-page');
+    if (!page) return;
+    const sections = Array.from(page.querySelectorAll<HTMLElement>('section'));
+    const targets = sections.length ? sections : [page];
+    targets.forEach((element) => { element.dataset.reveal = ''; });
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2 });
+    targets.forEach((element) => observer.observe(element));
+    return () => observer.disconnect();
+  }, [displayPage]);
+
   const renderPage = () => {
-    switch (currentPage) {
+    switch (displayPage) {
       case 'home':
         return <HomePage />;
       case 'personal':
@@ -76,7 +106,9 @@ const AppContent: React.FC = () => {
 
       {/* Main Active Page Content */}
       <main className="flex-1">
-        {renderPage()}
+        <div key={displayPage} className={`site-page-shell ${isExiting ? 'route-page-exit' : 'route-page-enter'}`}>
+          <div className="site-page">{renderPage()}</div>
+        </div>
       </main>
 
       {/* Global Multi-Page Footer */}

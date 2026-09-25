@@ -2,4 +2,22 @@ import React from 'react';
 import { GlobalPayLogo } from './GlobalPayLogo';
 import { useNavigation } from '../context/NavigationContext';
 
-export const Footer: React.FC = () => { const { navigateTo } = useNavigation(); const links: [string, Parameters<typeof navigateTo>[0]][] = [['Personal', 'personal'], ['Business', 'business'], ['How It Works', 'how-it-works'], ['Pricing', 'pricing'], ['Security', 'security'], ['FAQ', 'faq'], ['Contact', 'contact'], ['Terms', 'terms'], ['Privacy', 'privacy'], ['AML/KYC Policy', 'aml-kyc']]; return <footer className="bg-slate-900 dark:bg-[#020713] text-slate-400 text-xs border-t border-slate-800"><div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12"><div className="flex flex-col md:flex-row gap-8 justify-between"><div><button onClick={() => navigateTo('home')}><GlobalPayLogo size="lg" showTagline={true} /></button><p className="mt-4 max-w-sm text-sm leading-relaxed">GlobalPay connects individuals and businesses to trusted payment partners for multi-currency and crypto payments.</p></div><nav className="grid grid-cols-2 sm:grid-cols-3 gap-x-8 gap-y-3">{links.map(([label, page]) => <button key={page} onClick={() => navigateTo(page)} className="text-left hover:text-cyan-400 transition-colors">{label}</button>)}</nav></div><div className="mt-10 pt-6 border-t border-slate-800 text-xs leading-relaxed">GlobalPay does not hold customer funds. Every account must complete the relevant verification before making or receiving payments. [LEGAL REVIEW NEEDED]</div><div className="mt-5 text-xs">© {new Date().getFullYear()} GlobalPay. All rights reserved.</div></div></footer>; };
+const primaryLinks: [string, Parameters<ReturnType<typeof useNavigation>['navigateTo']>[0]][] = [
+	['Personal', 'personal'],
+	['Business', 'business'],
+	['How It Works', 'how-it-works'],
+	['Pricing', 'pricing'],
+	['Security', 'security'],
+	['FAQ', 'faq'],
+];
+const secondaryLinks: [string, Parameters<ReturnType<typeof useNavigation>['navigateTo']>[0]][] = [
+	['Contact', 'contact'],
+	['Terms', 'terms'],
+	['Privacy', 'privacy'],
+	['AML/KYC Policy', 'aml-kyc'],
+];
+
+export const Footer: React.FC = () => {
+	const { navigateTo } = useNavigation();
+	return <footer className="site-footer"><div className="site-footer-inner"><div className="site-footer-main"><div className="site-footer-brand"><button onClick={() => navigateTo('home')} aria-label="GlobalPay Home"><GlobalPayLogo size="lg" showTagline={false} /></button><p>GlobalPay connects individuals and businesses to trusted payment partners for multi-currency and crypto payments.</p></div><nav className="footlinks" aria-label="Footer navigation"><div>{primaryLinks.map(([label, page]) => <button key={page} onClick={() => navigateTo(page)}>{label}</button>)}</div><div>{secondaryLinks.map(([label, page]) => <button key={page} className="muted" onClick={() => navigateTo(page)}>{label}</button>)}</div><div className="hidden sm:block" aria-hidden="true" /></nav></div><div className="site-footer-legal"><p>All accounts must complete identity verification (KYC) before sending or receiving payments. GlobalPay does not hold customer funds; transactions are processed through licensed payment partners.</p><p>© {new Date().getFullYear()} GlobalPay. All rights reserved.</p></div></div></footer>;
+};

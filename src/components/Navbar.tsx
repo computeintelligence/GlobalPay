@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Sun, Moon, ArrowRight, Menu, X, LogOut } from 'lucide-react';
+import { ArrowRight, Menu, X, LogOut } from 'lucide-react';
 import { GlobalPayLogo } from './GlobalPayLogo';
-import { useTheme } from '../context/ThemeContext';
 import { useNavigation } from '../context/NavigationContext';
 import { useAccount } from '../context/AccountContext';
 import { PageId } from '../types';
 
 export const Navbar: React.FC = () => {
-  const { theme, toggleTheme } = useTheme();
   const { currentPage, navigateTo } = useNavigation();
   const { currentUser, signOut } = useAccount();
   const [scrolled, setScrolled] = useState(false);
@@ -81,73 +79,58 @@ export const Navbar: React.FC = () => {
           })}
         </nav>
 
-        {/* Right Controls: Theme + User Account status + Get Started */}
+        {/* Right Controls: User Account status + Get Started */}
         <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
-          {/* Light/Dark Toggle */}
-          <button
-            id="theme-toggle-btn"
-            onClick={toggleTheme}
-            aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
-            className="p-2.5 rounded-full text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all border border-slate-200/60 dark:border-slate-700/60 flex items-center justify-center cursor-pointer"
-          >
-            {theme === 'light' ? (
-              <Moon className="w-4 h-4 text-[#002D8A]" />
-            ) : (
-              <Sun className="w-4 h-4 text-amber-400" />
-            )}
-          </button>
-
           {/* User Account State: Logged In vs Logged Out */}
-          {currentUser ? (
-            <div className="flex items-center gap-2">
-              <button
-                id="navbar-user-dashboard-btn"
-                onClick={() => setSignInOpen(!signInOpen)}
-                className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-700 transition-all cursor-pointer"
-              >
-                <div className="w-6 h-6 rounded-full bg-gradient-to-r from-[#0052FF] to-[#00D2B4] flex items-center justify-center text-[10px] text-white font-black">
-                  {currentUser.fullName.charAt(0)}
-                </div>
-                <span className="hidden md:inline">{currentUser.fullName.split(' ')[0]}</span>
-                <span className="text-[10px] px-1.5 py-0.5 rounded bg-[#0052FF]/10 dark:bg-cyan-500/20 text-[#0052FF] dark:text-cyan-300 uppercase font-black">
-                  {currentUser.tier}
-                </span>
-              </button>
+          <div className="hidden xl:flex items-center gap-2">
+            {currentUser ? (
+              <div className="flex items-center gap-2">
+                <button
+                  id="navbar-user-dashboard-btn"
+                  onClick={() => setSignInOpen(!signInOpen)}
+                  className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-700 transition-all cursor-pointer"
+                >
+                  <div className="w-6 h-6 rounded-full bg-gradient-to-r from-[#0052FF] to-[#00D2B4] flex items-center justify-center text-[10px] text-white font-black">
+                    {currentUser.fullName.charAt(0)}
+                  </div>
+                  <span className="hidden md:inline">{currentUser.fullName.split(' ')[0]}</span>
+                  <span className="text-[10px] px-1.5 py-0.5 rounded bg-[#0052FF]/10 dark:bg-cyan-500/20 text-[#0052FF] dark:text-cyan-300 uppercase font-black">
+                    {currentUser.tier}
+                  </span>
+                </button>
 
-              <button
-                id="navbar-signout-btn"
-                onClick={() => {
-                  signOut();
-                  handleNav('home');
-                }}
-                title="Sign out of account"
-                className="p-2 rounded-xl text-slate-500 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition-colors cursor-pointer"
-              >
-                <LogOut className="w-4 h-4" />
-              </button>
-            </div>
-          ) : (
-            <div className="flex items-center gap-2">
-              <button
-                id="navbar-signin-btn"
-                onClick={() => handleNav('get-started')}
-                className="hidden md:inline-flex items-center text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-200 hover:text-[#0052FF] dark:hover:text-cyan-400 px-3 py-2 cursor-pointer transition-colors"
-              >
-                Sign In
-              </button>
-              {signInOpen && <div className="absolute top-14 right-28 z-10 w-44 rounded-xl bg-white dark:bg-[#07132B] border border-slate-200 dark:border-slate-700 shadow-lg p-2"><button onClick={() => handleNav('personal-signin')} className="w-full text-left px-3 py-2 rounded-lg text-sm font-semibold hover:bg-slate-100 dark:hover:bg-slate-800">Personal</button><button onClick={() => handleNav('business-signin')} className="w-full text-left px-3 py-2 rounded-lg text-sm font-semibold hover:bg-slate-100 dark:hover:bg-slate-800">Business</button></div>}
-
-              {/* Universal Get Started CTA */}
-              <button
-                id="navbar-get-started-btn"
-                onClick={() => handleNav('get-started')}
-                className="inline-flex items-center gap-1.5 sm:gap-2 px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-bold text-white bg-gradient-to-r from-[#0052FF] via-[#00B4D8] to-[#10DF62] hover:opacity-95 shadow-md shadow-cyan-500/20 hover:shadow-cyan-500/30 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer whitespace-nowrap"
-              >
-                <span>Get Started</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </button>
-            </div>
-          )}
+                <button
+                  id="navbar-signout-btn"
+                  onClick={() => {
+                    signOut();
+                    handleNav('home');
+                  }}
+                  title="Sign out of account"
+                  className="p-2 rounded-xl text-slate-500 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition-colors cursor-pointer"
+                >
+                  <LogOut className="w-4 h-4" />
+                </button>
+              </div>
+            ) : (
+              <>
+                <button
+                  id="navbar-signin-btn"
+                  onClick={() => handleNav('get-started')}
+                  className="inline-flex items-center text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-200 hover:text-[#0052FF] dark:hover:text-cyan-400 px-3 py-2 cursor-pointer transition-colors"
+                >
+                  Sign In
+                </button>
+                <button
+                  id="navbar-get-started-btn"
+                  onClick={() => handleNav('get-started')}
+                  className="inline-flex items-center gap-1.5 sm:gap-2 px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-bold text-white bg-gradient-to-r from-[#0052FF] via-[#00B4D8] to-[#10DF62] hover:opacity-95 shadow-md shadow-cyan-500/20 hover:shadow-cyan-500/30 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer whitespace-nowrap"
+                >
+                  <span>Get Started</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </button>
+              </>
+            )}
+          </div>
 
           {/* Mobile Menu Hamburger */}
           <button
@@ -189,18 +172,25 @@ export const Navbar: React.FC = () => {
           </div>
 
           <div className="pt-3 border-t border-slate-200 dark:border-slate-800 flex flex-col gap-2">
-            <div className="grid grid-cols-2 gap-2">
-              <button onClick={() => handleNav('personal-signin')} className="py-2.5 rounded-xl font-bold text-sm text-slate-700 dark:text-slate-200 bg-slate-100 dark:bg-slate-800">Sign In: Personal</button>
-              <button onClick={() => handleNav('business-signin')} className="py-2.5 rounded-xl font-bold text-sm text-slate-700 dark:text-slate-200 bg-slate-100 dark:bg-slate-800">Sign In: Business</button>
-            </div>
-            <button
-              id="mobile-drawer-get-started-btn"
-              onClick={() => handleNav('get-started')}
-              className="w-full py-3 rounded-xl font-bold text-white bg-gradient-to-r from-[#0052FF] via-[#00B4D8] to-[#10DF62] text-center flex items-center justify-center gap-2 shadow-lg shadow-cyan-500/25 cursor-pointer"
-            >
-              <span>Get Started</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
+            {!currentUser && (
+              <button
+                id="mobile-drawer-signin-btn"
+                onClick={() => handleNav('get-started')}
+                className="w-full py-2.5 rounded-xl font-bold text-sm text-slate-700 dark:text-slate-200 bg-slate-100 dark:bg-slate-800"
+              >
+                Sign In
+              </button>
+            )}
+            {!currentUser && (
+              <button
+                id="mobile-drawer-get-started-btn"
+                onClick={() => handleNav('get-started')}
+                className="w-full py-3 rounded-xl font-bold text-white bg-gradient-to-r from-[#0052FF] via-[#00B4D8] to-[#10DF62] text-center flex items-center justify-center gap-2 shadow-lg shadow-cyan-500/25 cursor-pointer"
+              >
+                <span>Get Started</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+            )}
           </div>
         </div>
       )}

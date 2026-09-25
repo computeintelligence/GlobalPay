@@ -69,6 +69,63 @@ export interface FAQItem {
   category: 'general' | 'currencies' | 'app' | 'security' | 'fees';
 }
 
+export type FeeRoute = 'business' | 'personal-local' | 'personal-international' | 'personal-crypto';
+export type FeePaymentMethod = 'card' | 'eft' | 'intlCard';
+export type CryptoFeeMethod = 'buySell' | 'stablecoin' | 'swap' | 'sendOut' | 'receive';
+export type FeeSource = 'config' | 'public-reference' | 'fallback';
+
+export interface FeeRule { pct: number; min: number; cap: number; fixed?: number; fixedWaivedBelow?: number; note?: string; }
+
+export interface FeeConfig {
+  currency: string;
+  vatRate: number;
+  lastUpdated: string;
+  minAmount: number;
+  vatOnGlobalpayFee: boolean;
+  vatOnCryptoPartnerFee: boolean;
+  payoutMode: 'split' | 'transfer';
+  notes: Record<string, string>;
+  globalpay: {
+    business: { eft: FeeRule; card: FeeRule; intlCard: FeeRule };
+    personal: { localSend: FeeRule; intlSend: FeeRule };
+    crypto: Record<CryptoFeeMethod, FeeRule>;
+  };
+  partner: {
+    card: FeeRule;
+    eft: FeeRule;
+    intlCard: FeeRule;
+    transferOut: { fixed: number };
+    international: { defaultPct: number | string; minFee: number; conversionMarginPct: number; routes: Record<string, { pct: number | string }> };
+    crypto: { buySellPct: number; stablecoinPct: number; swapPct: number; note: string };
+  };
+  fxRates: {
+    source: string;
+    note: string;
+    fallback: Record<string, number>;
+  };
+}
+
+export interface FeeLine {
+  label: string;
+  cents: number;
+}
+
+export interface FeeResult {
+  status: 'ready' | 'unavailable' | 'invalid' | 'quote_required';
+  message?: string;
+  estimated: boolean;
+  currency: string;
+  amountCents: number;
+  lines: FeeLine[];
+  totalFeesCents?: number;
+  totalPercentage?: number;
+  recipientAmountCents?: number;
+  recipientCurrency?: string;
+  exchangeRate?: number;
+  rateSource?: FeeSource;
+  note?: string;
+}
+
 export interface SecurityBadge {
   title: string;
   description: string;
